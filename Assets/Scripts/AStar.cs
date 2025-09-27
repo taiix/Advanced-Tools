@@ -20,12 +20,14 @@ public class AStar : MonoBehaviour
 
     List<Node> checkList = new List<Node>();
 
+    List<Vector3> path = new();
 
     Node currentNode = null;
 
     bool no = true;
 
-    int steps = 0; Vector3 endSgot;
+    int steps = 0; 
+    Vector3 endSgot;
 
 
     private void Awake()
@@ -174,12 +176,16 @@ public class AStar : MonoBehaviour
         int steps = 0;
         while (endSgot != startPos)
         {
-            Instantiate(displayPathObj, new Vector3(endSgot.x, endSgot.y + 1, endSgot.z), Quaternion.identity);
+            GameObject go = Instantiate(displayPathObj, new Vector3(endSgot.x, endSgot.y + 1, endSgot.z), Quaternion.identity);
             endSgot = openDictionary[endSgot].parent.worldPos;
+
+            path.Add(endSgot);
             if (steps == 200)
                 return;
             steps++;
         }
+
+        EventManager.OnPathReceived?.Invoke(path);
         Debug.Log("TOTAL STEPS TO FIND THE GOAL = " + steps);
         no = false;
     }

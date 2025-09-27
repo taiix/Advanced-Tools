@@ -78,7 +78,7 @@ public class Grid : MonoBehaviour
 
                 if (walkable && gridSpawnObject != null)
                 {
-                    Instantiate(gridSpawnObject, (Vector3)cellPos, Quaternion.identity);
+                    Instantiate(gridSpawnObject, (Vector3)cellPos, Quaternion.identity, this.transform);
                 }
             }
         }
